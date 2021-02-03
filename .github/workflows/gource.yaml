@@ -18,19 +18,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install gource
+      - name: Install gource & xvfb
         run: sudo apt-get install gource xvfb -y
-      - name: Install ffmpeg
-        run: sudo apt-get update && sudo snap install ffmpeg
-      - name: hide display
-        run: Xvfb :99 -ac -screen 0 1280x720x24 -nolisten tcp &
-      - name: mkdir
-        run: sudo mkdir -p /tmp/xdg
-      - name: XDG runtime
-        run: export XDG_RUNTIME_DIR=/tmp/xdg
-      - name: SET DISPLAY
-        run: export DISPLAY=:99
+      - name: Install ffmpeg & gifski
+        run: sudo apt-get update && sudo snap install ffmpeg gifski
       - name: Run gource with xvfb
         run: sudo xvfb-run -a gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
-      - name: List directory
+      - name: mkdir frames
+        run: mkdir frames
+      - name: create images from video
+        run: ffmpeg -i ./gource.mp4 -r 15 -vf scale=512:-1 frames/%04d.png
+      - name: create gif
+        run: gifski -o gource.gif frames/*.png
+      - name: list dir
         run: sudo ls -h
