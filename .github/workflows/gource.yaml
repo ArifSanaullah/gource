@@ -17,8 +17,10 @@ jobs:
         name: Setting up gource
 
         steps:
-            - uses: actions/checkout@v2
-            - uses: GabrielBB/xvfb-action@v1
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: XVFB runner
+              uses: GabrielBB/xvfb-action@v1
             - name: Install gource & xvfb
               run: sudo apt-get install gource xvfb -y
             - name: Install ffmpeg & gifski
@@ -32,7 +34,7 @@ jobs:
             - name: SET DISPLAY
               run: export DISPLAY=:99
             - name: Run gource with xvfb
-              run: gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
+              run: sudo xvfb-run -a gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
             - name: mkdir frames
               run: mkdir frames
             - name: create images from video
