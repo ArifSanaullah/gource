@@ -38,5 +38,7 @@ jobs:
         run: ffmpeg -i ./gource.mp4 -r 15 -vf scale=512:-1 frames/%04d.png
       - name: create gif
         run: gifski -o gource.gif frames/*.png
-      - name: list dir
-        run: sudo ls -h
+      - name: remove extras
+        run: rm -rf frames gource.mp4
+      - name: push to github
+        run: git add . && git commit -m "from action" && git push origin main
