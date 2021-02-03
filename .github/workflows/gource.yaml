@@ -37,7 +37,7 @@ jobs:
             - name: create images from video
               run: ffmpeg -i ./gource.mp4 -r 15 -vf scale=512:-1 frames/%04d.png
             - name: Delete previous gif
-              run: rm gource.gif
+              run: rm -f gource.gif
             - name: create gif
               run: gifski -o gource.gif frames/*.png
             - name: remove extras
