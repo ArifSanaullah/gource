@@ -23,14 +23,14 @@ jobs:
               run: sudo apt-get install gource xvfb -y
             - name: Install ffmpeg & gifski
               run: sudo apt-get update && sudo snap install ffmpeg gifski
-            - name: Hide display with xvfb
-              run: Xvfb :99 -ac -screen 0 1280x720x24 -nolisten tcp &
-            - name: create XDG folder
-              run: mkdir -p /tmp/xdg
-            - name: set xdg runtime
-              run: export XDG_RUNTIME_DIR=/tmp/xdg
-            - name: SET DISPLAY
-              run: export DISPLAY=:99
+#             - name: Hide display with xvfb
+#               run: Xvfb :99 -ac -screen 0 1280x720x24 -nolisten tcp &
+#             - name: create XDG folder
+#               run: mkdir -p /tmp/xdg
+#             - name: set xdg runtime
+#               run: export XDG_RUNTIME_DIR=/tmp/xdg
+#             - name: SET DISPLAY
+#               run: export DISPLAY=:99
             - name: XVFB runner
               uses: GabrielBB/xvfb-action@v1
               with:
