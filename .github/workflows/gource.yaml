@@ -40,14 +40,19 @@ jobs:
               run: rm -f ./gource.gif && gifski -o gource.gif ./frames/*.png && rm -rf ./frames
             - name: List directory contents
               run: sudo find .
-            - name: setup git
-              uses: actions/checkout@master
-              with:
-                  persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-                  fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-            - name: Commit & Push changes
-              uses: actions-js/push@master
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+            # - name: setup git
+            #   uses: actions/checkout@master
+            #   with:
+            #       persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+            #       fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+            # - name: Commit & Push changes
+            #   uses: actions-js/push@master
+            #   with:
+            #       github_token: ${{ secrets.GITHUB_TOKEN }}
             # - name: Git Commit and Push
             # uses: github-actions-x/commit@v2.6
+            - name: Setup git
+              uses: mikeal/publish-to-github-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  BRANCH_NAME: 'main' #optional defaults to master
