@@ -34,5 +34,5 @@ jobs:
               run: sudo xvfb-run -a gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
             - name: List directory
               run: sudo ls -h
-            - name: setup git
-              run: git add . && git commit --allow-empty --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" && git push origin main
+            # - name: setup git
+            # run: git add . && git commit --allow-empty --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" && git push origin main
