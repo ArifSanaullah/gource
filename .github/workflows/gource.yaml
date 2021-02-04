@@ -5,34 +5,34 @@ name: Testing gource
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    name: Setting up gource
+    # This workflow contains a single job called "build"
+    build:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+        name: Setting up gource
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install gource
-        run: sudo apt-get install gource xvfb -y
-      - name: Install ffmpeg
-        run: sudo apt-get update && sudo snap install ffmpeg
-      - name: hide display
-        run: Xvfb :99 -ac -screen 0 1280x720x24 -nolisten tcp &
-      - name: mkdir
-        run: sudo mkdir -p /tmp/xdg
-      - name: XDG runtime
-        run: export XDG_RUNTIME_DIR=/tmp/xdg
-      - name: SET DISPLAY
-        run: export DISPLAY=:99
-      - name: Run gource with xvfb
-        run: sudo xvfb-run -a gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
-      - name: setup git
-        run: git add . && git commit -m "from actions" && git push origin main
-      - name: List directory
-        run: sudo ls -h
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install gource
+              run: sudo apt-get install gource xvfb -y
+            - name: Install ffmpeg
+              run: sudo apt-get update && sudo snap install ffmpeg
+            - name: hide display
+              run: Xvfb :99 -ac -screen 0 1280x720x24 -nolisten tcp &
+            - name: mkdir
+              run: sudo mkdir -p /tmp/xdg
+            - name: XDG runtime
+              run: export XDG_RUNTIME_DIR=/tmp/xdg
+            - name: SET DISPLAY
+              run: export DISPLAY=:99
+            - name: Run gource with xvfb
+              run: sudo xvfb-run -a gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
+            - name: List directory
+              run: sudo ls -h
+            - name: setup git
+              run: git add . && git commit --allow-empty --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" && git push origin main
