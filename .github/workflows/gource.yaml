@@ -23,7 +23,7 @@ jobs:
             - name: Install ffmpeg & gifski
               run: sudo apt-get update && sudo snap install ffmpeg gifski
             - name: hide display
-              run: Xvfb :99 -ac -screen 0 1280x720x24 -nolisten tcp &
+              run: Xvfb -a -ac -screen 0 1280x720x24 -nolisten tcp &
             - name: mkdir xdg
               run: sudo mkdir -p /tmp/xdg
             - name: XDG runtime
