@@ -32,5 +32,7 @@ jobs:
         run: export DISPLAY=:99
       - name: Run gource with xvfb
         run: sudo xvfb-run -a gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
+      - name: setup git
+        run: git add . && git commit -m "from actions" && git push origin main
       - name: List directory
         run: sudo ls -h
