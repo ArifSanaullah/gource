@@ -22,14 +22,6 @@ jobs:
               run: sudo apt-get install gource xvfb -y
             - name: Install ffmpeg & gifski
               run: sudo apt-get update && sudo snap install ffmpeg gifski
-            # - name: hide display
-            # run: Xvfb -a -ac -screen 0 1280x720x24 -nolisten tcp &
-            # - name: mkdir xdg
-            # run: sudo mkdir -p /tmp/xdg
-            # - name: XDG runtime
-            # run: export XDG_RUNTIME_DIR=/tmp/xdg
-            # - name: SET DISPLAY
-            # run: export DISPLAY=:99
             - name: Run gource with xvfb
               run: xvfb-run --auto-servernum --server-num=99 gource -1280x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
             - name: create frames dir
@@ -40,17 +32,6 @@ jobs:
               run: rm -f ./gource.gif && gifski -o gource.gif ./frames/*.png && rm -rf ./frames
             - name: List directory contents
               run: sudo find .
-            # - name: setup git
-            #   uses: actions/checkout@master
-            #   with:
-            #       persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-            #       fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-            # - name: Commit & Push changes
-            #   uses: actions-js/push@master
-            #   with:
-            #       github_token: ${{ secrets.GITHUB_TOKEN }}
-            # - name: Git Commit and Push
-            # uses: github-actions-x/commit@v2.6
             - name: Setup git
               uses: mikeal/publish-to-github-action@master
               env:
