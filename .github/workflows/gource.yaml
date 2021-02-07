@@ -30,9 +30,7 @@ jobs:
               run: ffmpeg -i ./gource.mp4  -r 5 frames/%04d.png && rm ./gource.mp4
             - name: del old gif & Create gif from images & del frames
               run: rm -f ./gource.gif && gifski -o gource.gif ./frames/*.png && rm -rf ./frames
-            - name: List directory contents
-              run: sudo find .
-            - name: Setup git
+            - name: Push changes
               uses: mikeal/publish-to-github-action@master
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
